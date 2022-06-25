@@ -11,7 +11,7 @@ const Profile = () => {
 
 export default {
     routeProps: {
-        path: '/',
+        path: 'profile',
         exact: true,
         index: false,
         element: <Profile/>,

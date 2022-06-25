@@ -6,6 +6,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import { CommonModules } from '../modules';
 import { RTDB } from "./app.resources/app.resouces.realtimedb";
 import {Title} from "@mantine/core";
+import {AuthLayout} from "./app.layouts/auth.layout";
 
 
 const App = () => {
@@ -17,13 +18,13 @@ const App = () => {
 
     return (
         <>
-            <Title mx={15} my={20} order={2}>Авторизация</Title>
             {
                 // error
                 // && <ServerError/>
                 // || loading
                 // && <Loader/>
                 // || <AuthLayout user={user}/>
+                <AuthLayout/>
             }
         </>
     );
