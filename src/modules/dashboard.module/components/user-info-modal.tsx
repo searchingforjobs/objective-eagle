@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, Group, Modal, Space, Timeline, Text, Divider} from "@mantine/core";
+import {Avatar, Group, Modal, Space, Timeline, Text, Divider, Button} from "@mantine/core";
 
 interface UserInfoModalProps {
     opened: boolean;
@@ -15,7 +15,7 @@ const UserInfoModal = (props: UserInfoModalProps) => {
             size={ 'xl' }
             padding={ 'xl' }
         >
-            <Group position={ 'apart' } align={ 'top' } mb={ 30 }>
+            <Group position={ 'apart' } align={ 'top' } >
                 <Group direction={ 'column' }>
                     <Group>
                         <Avatar size={ 100 }/>
@@ -57,6 +57,7 @@ const UserInfoModal = (props: UserInfoModalProps) => {
                             <Text  size={ 'sm' } >Ковалева Мария Алексеевна</Text>
                         </Group>
                     </Group>
+                    <Button mt={ 30 }>Подтвердить личность</Button>
                 </Group>
                 <Timeline active={2} bulletSize={20} lineWidth={3} sx={{ width: '200px' }}>
                     <Timeline.Item title={ <Text size={ 'sm' } sx={{ wordWrap: 'break-word' }}>Подтвердил номер телефона</Text> }>
