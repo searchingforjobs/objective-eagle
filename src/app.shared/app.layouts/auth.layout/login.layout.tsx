@@ -34,12 +34,12 @@ export const LoginLayout = () => {
     }
 
     return (
-            <Center sx={{ height: '100vh' }}>
+            <Center sx={{ height: '80vh' }}>
                 <Group direction={ 'column' } align={ 'center' }>
                     <Text mb={ 50 } weight={ 700 } color={ 'blue' } sx={{ fontSize: '40px' }} >ПропускЕсть</Text>
-                    <Button fullWidth onClick={ loginManager }>Родитель</Button>
+                    {/*<Button fullWidth onClick={ loginManager }>Родитель</Button>*/}
                     <Button fullWidth onClick={ loginManager }>Менеджер</Button>
-                    <Divider size={ 'lg' } label={ 'или' } labelPosition={ 'center' }/>
+                    <Divider size={ 'xs' } label={ 'или' } labelPosition={ 'center' } sx={{width: '100%'}}/>
                     <Button fullWidth onClick={ () => {} }>Создать профиль</Button>
                     <Button fullWidth onClick={ () => {} } sx={{
                         border: '1px solid #E7E7E7',

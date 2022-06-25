@@ -4,7 +4,6 @@ import {Avatar, Group, Modal, Space, Timeline, Text, Divider, Button} from "@man
 interface UserInfoModalProps {
     opened: boolean;
     setOpened: (a:boolean) => void;
-
 }
 
 const UserInfoModal = (props: UserInfoModalProps) => {
@@ -57,7 +56,6 @@ const UserInfoModal = (props: UserInfoModalProps) => {
                             <Text  size={ 'sm' } >Ковалева Мария Алексеевна</Text>
                         </Group>
                     </Group>
-                    <Button mt={ 30 }>Подтвердить личность</Button>
                 </Group>
                 <Timeline active={2} bulletSize={20} lineWidth={3} sx={{ width: '200px' }}>
                     <Timeline.Item title={ <Text size={ 'sm' } sx={{ wordWrap: 'break-word' }}>Подтвердил номер телефона</Text> }>
@@ -73,6 +71,9 @@ const UserInfoModal = (props: UserInfoModalProps) => {
                     </Timeline.Item>
 
                 </Timeline>
+            </Group>
+            <Group position={ 'right' } sx={{ width: '100%' }}>
+                <Button mt={ 30 }>Подтвердить личность</Button>
             </Group>
         </Modal>
     );
