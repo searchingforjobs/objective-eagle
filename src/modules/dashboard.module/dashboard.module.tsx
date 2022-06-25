@@ -1,7 +1,8 @@
-import React, {forwardRef} from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import {Button, Container, createStyles, Group, Select, Text} from "@mantine/core";
 import {Stats} from "./components/stats";
 import {NewUsersList} from "./components/new-users-list";
+import { API } from "../../app.shared/app.services";
 
 const monthsData = [
     {
@@ -136,6 +137,10 @@ const useStyles = createStyles((theme) => ({
 
 const Dashboard = () => {
     const { classes } = useStyles();
+
+    useEffect(() => {
+        console.log(API.INSTITUTIONS())
+    }, [])
 
     return (
         <Container mt={ 100 }>
