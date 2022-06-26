@@ -1,7 +1,10 @@
-import {Avatar, Button, Header as MantineHeader} from "@mantine/core";
+import {Avatar, Button, Header as MantineHeader, Image} from "@mantine/core";
 import {Container, Group, Text} from "@mantine/core";
 import {Star} from "tabler-icons-react";
 import {useLocation, useNavigate} from "react-router-dom";
+
+
+import logo from '../../app.images/logo.svg'
 
 export const AppHeader = (props:{title:JSX.Element, children?:JSX.Element}) => {
     const navigate = useNavigate()
@@ -13,16 +16,12 @@ export const AppHeader = (props:{title:JSX.Element, children?:JSX.Element}) => {
             {
                 locaton.pathname != '/' &&
                 <MantineHeader height={ 50 } fixed={true} position={{ top: 0, left: 0, right: 0 }}>
-                    <Container size={'md'} mt={ 5 }>
+                    <Container size={'md'} mt={ 10 }>
                         <Group position={ 'apart' } align={ 'center' }>
-                            <Group>
-                                <Avatar color="blue" radius="xl">
-                                    <Star size={24} />
-                                </Avatar>
-                                <Text weight={ 600 }>
-                                    Андромеда
-                                </Text>
-                            </Group>
+                            <Image src={ logo }/>
+                            {/*<Group>*/}
+                            {/*    <Avatar color="blue" radius="xl" src={ logo } />*/}
+                            {/*</Group>*/}
                             <Group>
                                 <Button
                                     variant={ 'subtle' }
@@ -35,6 +34,12 @@ export const AppHeader = (props:{title:JSX.Element, children?:JSX.Element}) => {
                                     onClick={ () => navigate('/data') }
                                     sx={{height: '30px', '&:focus': {backgroundColor: 'rgba(231, 245, 255, 1)'}}}>
                                     Реестр данных
+                                </Button>
+                                <Button
+                                    variant={ 'subtle' }
+                                    onClick={ () => navigate('/incidents') }
+                                    sx={{height: '30px', '&:focus': {backgroundColor: 'rgba(231, 245, 255, 1)'}}}>
+                                    Инциденты
                                 </Button>
                                 <Button
                                     variant={ 'subtle' }

@@ -97,7 +97,7 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
         return actions
     }
 
-    function getOne(id: string){
+    function getOne(id: string | undefined){
         return doFetchingOperation(() => {
             api.get<DataModel>(`${endpoint}/${id}`)
                 .then((response) => {

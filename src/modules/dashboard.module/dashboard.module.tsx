@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
-import { Button, Container, createStyles, Group } from "@mantine/core";
+import {Button, Container, createStyles, Group, Image} from "@mantine/core";
 import { Stats } from "./components/stats";
 import { NewUsersList } from "./components/new-users-list";
 import { $api, API, useResource } from "../../app.shared/app.services";
-import { CreateProfileDto, Gender, Profile } from "../../app.shared/app.models";
+import {
+    Attendee,
+    CreateAttendeeDto,
+    CreatePassportDto,
+    CreateProfileDto,
+    Gender,
+    Passport,
+    Profile
+} from "../../app.shared/app.models";
+
+import component from '../../app.shared/app.images/component.svg'
 
 const monthsData = [
     {
@@ -139,9 +149,13 @@ const useStyles = createStyles((theme) => ({
 const Dashboard = () => {
     const { classes } = useStyles();
 
+    const attendees = useResource<Attendee, CreateAttendeeDto, any>(API.ATTENDEES(), $api);
     const profiles = useResource<Profile, CreateProfileDto, any>(API.PROFILES(), $api);
+    const passports = useResource<Passport, CreatePassportDto, any>(API.PASSPORTS(), $api);
+
 
     useEffect(() => {
+
         // profiles.do
             // .create({
             //     firstname: "Владимир",
@@ -182,9 +196,6 @@ const Dashboard = () => {
                 <Button variant="default" className={classes.button}>
                     Год
                 </Button>
-                {
-                    profiles.data?.map(d => d.firstname)
-                }
             </Group>
             <Stats data={[
                 {
@@ -218,7 +229,13 @@ const Dashboard = () => {
                     buttonColorFrom: 'red',
                 }
             ]}/>
-            <NewUsersList data={newUsersData}/>
+
+            <Image
+                my={ 20 }
+                src={ component }
+            />
+
+            <NewUsersList attendees={ attendees.data }/>
         </Container>
     );
 };
