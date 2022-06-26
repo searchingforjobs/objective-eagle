@@ -1,8 +1,9 @@
-import React, { forwardRef, useEffect } from 'react';
-import {Button, Container, createStyles, Group, Select, Text} from "@mantine/core";
-import {Stats} from "./components/stats";
-import {NewUsersList} from "./components/new-users-list";
-import { API } from "../../app.shared/app.services";
+import React, { useEffect } from 'react';
+import { Button, Container, createStyles, Group } from "@mantine/core";
+import { Stats } from "./components/stats";
+import { NewUsersList } from "./components/new-users-list";
+import { $api, API, useResource } from "../../app.shared/app.services";
+import { CreateProfileDto, Gender, Profile } from "../../app.shared/app.models";
 
 const monthsData = [
     {
@@ -59,19 +60,19 @@ const monthsData = [
 const newUsersData = [
     {
         name: 'Ковалев Дмитрий Иванович',
-        kids: ['Ковалев Иван', 'Ковалева Анна'],
+        kids: [ 'Ковалев Иван', 'Ковалева Анна' ],
         regDate: '10',
         isWaiting: true
     },
     {
         name: 'Иванов Иван Иванович',
-        kids: ['Иванов Иван', 'Иванова Анна'],
+        kids: [ 'Иванов Иван', 'Иванова Анна' ],
         regDate: '10',
         isWaiting: false
     },
     {
         name: 'Семенов Семен Иванович',
-        kids: ['Семенов Иван', 'Семенова Анна'],
+        kids: [ 'Семенов Иван', 'Семенова Анна' ],
         regDate: '10',
         isWaiting: true
     },
@@ -138,12 +139,29 @@ const useStyles = createStyles((theme) => ({
 const Dashboard = () => {
     const { classes } = useStyles();
 
+    const profiles = useResource<Profile, CreateProfileDto, any>(API.PROFILES(), $api);
+
     useEffect(() => {
-        console.log(API.INSTITUTIONS())
+        // profiles.do
+            // .create({
+            //     firstname: "Владимир",
+            //     gender: Gender.MALE,
+            //     lastname: "Шустов"
+            // })
+            // .create({
+            //     firstname: "Олег",
+            //     gender: Gender.MALE,
+            //     lastname: "Лихобуб"
+            // })
+            // .create({
+            //     firstname: "Никита",
+            //     gender: Gender.MALE,
+            //     lastname: "Ванюченко"
+            // })
     }, [])
 
     return (
-        <Container mt={ 100 }>
+        <Container mt={100}>
             {/*<Select*/}
             {/*    data={ monthsData }*/}
             {/*    defaultValue={ '6' }*/}
@@ -151,53 +169,56 @@ const Dashboard = () => {
             {/*    style={{width: '120px'}}*/}
             {/*    dropdownComponent={ 'bottom' }*/}
             {/*/>*/}
-             <Group spacing={0} mb={ 20 }>
-                    <Button variant="default" className={classes.button}>
-                        Сегодня
-                    </Button>
-                    <Button variant="default" className={classes.button}>
-                        Неделя
-                    </Button>
-                    <Button  variant="default" className={classes.button}>
-                        Месяц
-                    </Button>
-                    <Button variant="default" className={classes.button}>
-                        Год
-                    </Button>
-                </Group>
-                <Stats data={ [
-                    {
-                        label: 'Всего посещений',
-                        stats: '1356',
-                        progress: 70,
-                        color: 'green',
-                        icon: 'up',
-                        buttonLabel: 'Перейти к посещениям',
-                        buttonColorTo: 'teal',
-                        buttonColorFrom: 'lime',
-                    },
-                    {
-                        label: 'Проведено мероприятий',
-                        stats: '267',
-                        progress: 80,
-                        color: 'blue',
-                        icon: 'up',
-                        buttonLabel: 'Посмотреть мероприятия',
-                        buttonColorTo: 'indigo',
-                        buttonColorFrom: 'cyan',
-                    },
-                    {
-                        label: 'Новых пользователей',
-                        stats: '25',
-                        progress: 40,
-                        color: 'red',
-                        icon: 'down',
-                        buttonLabel: 'Просмотреть новых пользователей',
-                        buttonColorTo: 'orange',
-                        buttonColorFrom: 'red',
-                    }
-                ] }/>
-                <NewUsersList data={ newUsersData } />
+            <Group spacing={0} mb={20}>
+                <Button variant="default" className={classes.button}>
+                    Сегодня
+                </Button>
+                <Button variant="default" className={classes.button}>
+                    Неделя
+                </Button>
+                <Button variant="default" className={classes.button}>
+                    Месяц
+                </Button>
+                <Button variant="default" className={classes.button}>
+                    Год
+                </Button>
+                {
+                    profiles.data?.map(d => d.firstname)
+                }
+            </Group>
+            <Stats data={[
+                {
+                    label: 'Всего посещений',
+                    stats: '1356',
+                    progress: 70,
+                    color: 'green',
+                    icon: 'up',
+                    buttonLabel: 'Перейти к посещениям',
+                    buttonColorTo: 'teal',
+                    buttonColorFrom: 'lime',
+                },
+                {
+                    label: 'Проведено мероприятий',
+                    stats: '267',
+                    progress: 80,
+                    color: 'blue',
+                    icon: 'up',
+                    buttonLabel: 'Посмотреть мероприятия',
+                    buttonColorTo: 'indigo',
+                    buttonColorFrom: 'cyan',
+                },
+                {
+                    label: 'Новых пользователей',
+                    stats: '25',
+                    progress: 40,
+                    color: 'red',
+                    icon: 'down',
+                    buttonLabel: 'Просмотреть новых пользователей',
+                    buttonColorTo: 'orange',
+                    buttonColorFrom: 'red',
+                }
+            ]}/>
+            <NewUsersList data={newUsersData}/>
         </Container>
     );
 };

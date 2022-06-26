@@ -33,7 +33,8 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
 ) {
     const [error, setError] = useState(null)
     const [isFetching, setFetching] = useState<boolean>(false)
-    const [data, setData] = useState<DataModel | null>(null)
+    const [data, setData] = useState<DataModel[] | null>(null)
+    const [one, setOne] = useState<DataModel | null>(null)
 
     function doFetchingOperation(operation: () => any) {
         setFetching(true)
@@ -48,7 +49,7 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
 
     function getResource() {
         return doFetchingOperation(() => {
-            api.get<DataModel>(endpoint)
+            api.get<DataModel[]>(endpoint)
                 .then((response) => {
                     resetError()
                     setData(response.data)
@@ -58,11 +59,6 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
                 })
             return data
         })
-    }
-
-    function updateResourceState(){
-        const data = getResource()
-        setData(data)
     }
 
     function createOne(dto: CreateDto, options?: { image: Buffer }){
@@ -83,7 +79,7 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
                     setError(error)
                 })
 
-            updateResourceState()
+            getResource()
             return actions
         }
 
@@ -97,7 +93,7 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
                 })
             return dto
         })
-        updateResourceState()
+        getResource()
         return actions
     }
 
@@ -106,12 +102,12 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
             api.get<DataModel>(`${endpoint}/${id}`)
                 .then((response) => {
                     resetError()
-                    setData(response.data)
+                    setOne(response.data)
                 })
                 .catch((error) => {
                     setError(error)
                 })
-            return data
+            return one
         })
     }
 
@@ -123,7 +119,7 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
             .catch((error) => {
                 setError(error)
             })
-        updateResourceState()
+        getResource()
         return actions
     }
 
@@ -135,7 +131,7 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
             .catch((error) => {
                 setError(error)
             })
-        updateResourceState()
+        getResource()
         return actions
     }
 
@@ -148,9 +144,8 @@ export function useResource<DataModel, CreateDto, UpdateDto>(
 
 
     useEffect(() => {
-        updateResourceState()
+        getResource()
     }, [])
-
 
     return {
         data: data,
